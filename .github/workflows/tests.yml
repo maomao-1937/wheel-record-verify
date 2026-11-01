@@ -1,0 +1,22 @@
+name: tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install declared dependencies
+        run: python -c "import pathlib,subprocess,sys; p=pathlib.Path('requirements.txt'); subprocess.check_call([sys.executable,'-m','pip','install','-r',str(p)]) if p.exists() else None"
+      - name: Run unit and CLI tests
+        run: python -m unittest discover -s tests -v
+      - name: Check documented examples and exit codes
+        run: python ci_checks.py

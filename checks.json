@@ -1,0 +1,8 @@
+[
+  {"args": ["examples/make_samples.py"], "exit": 0},
+  {"args": ["wheel_record_verify.py", "examples/generated/valid.whl"], "exit": 0},
+  {"args": ["wheel_record_verify.py", "examples/generated/tampered.whl"], "exit": 1},
+  {"args": ["wheel_record_verify.py", "examples/generated/missing.whl"], "exit": 1},
+  {"args": ["wheel_record_verify.py", "examples/generated/signature.whl"], "exit": 2},
+  {"args": ["wheel_record_verify.py", "--help"], "exit": 0}
+]
